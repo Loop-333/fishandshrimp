@@ -4,6 +4,7 @@ import FishCard from './FishCard'; // adjust path if needed
 export default function FishDisplay() {
   const [fishList, setFishList] = useState([]);
   const [selectedFish, setSelectedFish] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:3001/api/fish')
@@ -57,37 +58,58 @@ export default function FishDisplay() {
     );
   }
 
+  // Sort fishList based on selectedFilter for rendering
+  let displayedFishList = [...fishList];
+  if (selectedFilter === 'Alphabet') {
+    displayedFishList.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (selectedFilter === 'Stock') {
+    displayedFishList.sort((a, b) => b.stock - a.stock);
+  }
+
   return (
-    <div className="p-6 flex flex-wrap gap-6 justify-center">
-      {/* Render each fish card */}
-      {fishList.map((fish) => (
-        <FishCard key={fish.id} fish={fish} onViewDetails={setSelectedFish} />
-      ))}
+    <div>
+      <div className="mt-5 mb-0 flex justify-center">
+        <select
+          value={selectedFilter}
+          onChange={(e) => setSelectedFilter(e.target.value)}
+          className="border rounded px-6 py-2"
+        >
+          <option>Filtar por...</option>
+          <option value="Alphabet">Ordem Alfabética</option>
+          <option value="Stock">Maior Stock</option>
+        </select>
+      </div>
+      <div className="p-6 flex flex-wrap gap-6 justify-center">
+        {/* Render each fish card */}
+        {displayedFishList.map((fish) => (
+          <FishCard key={fish.id} fish={fish} onViewDetails={setSelectedFish} />
+        ))}
 
-      {/* STEP 3 — the modal goes right here */}
-      {selectedFish && (
-        <div className="fixed inset-0 bg-opacity-10 flex items-center justify-center z-50">
-          <div className="border bg-white max-w-2xl w-full p-6 rounded-xl relative">
-            <button
-              onClick={() => setSelectedFish(null)}
-              className="absolute top-2 right-2 text-xl text-gray-500 hover:text-red-600"
-            >
-              ✕
-            </button>
+        {/* STEP 3 — the modal goes right here */}
+        {selectedFish && (
+          <div className="fixed inset-0 bg-opacity-10 flex items-center justify-center z-50">
+            <div className="border bg-white max-w-2xl w-full p-6 rounded-xl relative">
+              <button
+                onClick={() => setSelectedFish(null)}
+                className="absolute top-2 right-2 text-xl text-gray-500 hover:text-red-600"
+              >
+                ✕
+              </button>
 
-            <h2 className="text-2xl font-bold mb-4">{selectedFish.name}</h2>
+              <h2 className="text-2xl font-bold mb-4">{selectedFish.name}</h2>
 
-            {/* IMAGE GALLERY LOGIC */}
-            <ImageGallery imageUrl={selectedFish.imageUrl} name={selectedFish.name} />
+              {/* IMAGE GALLERY LOGIC */}
+              <ImageGallery imageUrl={selectedFish.imageUrl} name={selectedFish.name} />
 
-            <p className="mb-2 text-gray-700">{selectedFish.description}</p>
-            <p className="mb-2 text-sm text-gray-500">Categoria: {selectedFish.category}</p>
-            <p className="mb-2">Preço: {selectedFish.price} €</p>
-            <p className="mb-2">Comprimento: {selectedFish.size} cm</p>
-            <p className="mb-4">Stock: {selectedFish.stock}</p>
+              <p className="mb-2 text-gray-700">{selectedFish.description}</p>
+              <p className="mb-2 text-sm text-gray-500">Categoria: {selectedFish.category}</p>
+              <p className="mb-2">Preço: {selectedFish.price} €</p>
+              <p className="mb-2">Comprimento: {selectedFish.size} cm</p>
+              <p className="mb-4">Stock: {selectedFish.stock}</p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
