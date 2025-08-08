@@ -67,12 +67,12 @@ export default function FishDisplay() {
   }
 
   return (
-    <div>
+    <div className='bg-[#FFF8DC] min-h-screen py-1'>
       <div className="mt-5 mb-0 flex justify-center">
         <select
           value={selectedFilter}
           onChange={(e) => setSelectedFilter(e.target.value)}
-          className="border rounded px-6 py-2"
+          className="bg-white border rounded px-6 py-2"
         >
           <option>Filtar por...</option>
           <option value="Alphabet">Ordem Alfabética</option>
