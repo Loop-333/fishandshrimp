@@ -1,19 +1,23 @@
-// backend/server.js
-const db = require('./db');
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const fishRoutes = require('./fishRoutes');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+app.use('/api', fishRoutes);
 
-// API route to get all fish
-app.use('/api', fishRoutes); // This means fishRoutes.js handles routes like /api/fish
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, 'dist')));
 
+// Catch-all route to serve React app for non-API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

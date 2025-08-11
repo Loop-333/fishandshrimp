@@ -19,7 +19,7 @@ export default function Footer() {
         {/* Social Media */}
         <div className="flex sm:justify-center gap-6">
           <a
-            href="https://wa.me/351926123456"
+            href="https://wa.me/351924138294"
             target="_blank"
             rel="noopener noreferrer"
             className="text-green-500 hover:text-green-700 text-2xl"
