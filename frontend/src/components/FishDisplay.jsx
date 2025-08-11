@@ -7,7 +7,7 @@ export default function FishDisplay() {
   const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/fish')
+    fetch('/api/fish')
       .then((res) => res.json())
       .then((data) => setFishList(data))
       .catch((err) => console.error('Error fetching fish:', err));

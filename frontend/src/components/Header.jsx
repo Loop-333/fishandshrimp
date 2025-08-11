@@ -39,7 +39,7 @@ export default function Header() {
           />
           <a className="text-white text-right lg:hidden">
             Contacte-nos <br />
-            926 123 456
+            924 138 294
           </a>
         </div>
 
@@ -51,7 +51,7 @@ export default function Header() {
           </a>
 
           <div className="flex gap-4">
-            <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/351924138294" target="_blank" rel="noopener noreferrer">
               <FaWhatsapp className="text-xl text-green-600 hover:text-green-800" />
             </a>
             <a
